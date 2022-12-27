@@ -11,4 +11,6 @@ function __DAY__()
     input=readit(input)
   end # of part2
 
-end # __DAY__
+  part1,part2,2 # default
+
+end # of __DAY__
