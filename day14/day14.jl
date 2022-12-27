@@ -16,7 +16,7 @@ function day14()
       mini,maxi=extrema(r[1:2:end])
       miniC,maxiC=min(miniC,mini),max(maxiC,maxi)
     end
-    println(miniR," ",maxiR," ",miniC," ",maxiC)
+    #println(miniR," ",maxiR," ",miniC," ",maxiC)
 
     # maxiR+2 for the second part
     table=OffsetMatrix(fill(0,0:maxiR+2,miniC-1:maxiC+1))
@@ -71,7 +71,7 @@ function day14()
 
   function part2(input)
     miniR,maxiR,miniC,maxiC,table=readit(input)
-    println(size(table))
+    # println(size(table))
     FL,_=size(table) # floor
     FL-=1
     table[FL,:].=1
@@ -116,10 +116,10 @@ function day14()
       table[r,c]=2
       rest+=1
     end
-    println(size(table))
+    # println(size(table))
     rest
   end # of part2
 
-  part1,part2,2
+  part1,part2,[1,2]
 
 end # of day14

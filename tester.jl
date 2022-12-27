@@ -10,7 +10,7 @@ tic()
 cl_pars=length(ARGS)>0 ? ARGS : nothing
 deps=[
   "DataStructures", # 11,12: Queue
-  "Printf","PrettyTables" # 
+  "Printf","PrettyTables", # 
   "OffsetArrays", # 14
 ]
 include("config.jl")
