@@ -4,4 +4,4 @@
 * run:         `julia tester.jl dayx.jl`
   * on linux one can use `./tester.jl` after modifying the shebang line appropriately
   * more than one days can be tested at once
-* it's in gamma stage# aoc2022
+* it's in gamma stage
