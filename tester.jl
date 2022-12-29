@@ -8,10 +8,12 @@ tic,toc=mktictoc()
 
 tic()
 cl_pars=length(ARGS)>0 ? ARGS : nothing
+# using the tools provided by the language 
+# - hopefully - yields a cleaner code
 deps=[
   "DataStructures", # 11,12: Queue
   "Printf","PrettyTables", # 
-  "OffsetArrays", # 14
+  "OffsetArrays", # 14,15
 ]
 include("config.jl")
 include("lib.jl")
