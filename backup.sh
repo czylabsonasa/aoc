@@ -1,2 +1,2 @@
 #!/bin/bash
-tar --exclude={"*__*","backup.tgz"} -czf backup.tgz *
+tar --exclude={"*__*"} -czf __backup.tgz *

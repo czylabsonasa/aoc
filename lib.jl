@@ -2,17 +2,15 @@ using Printf: @sprintf
 using PrettyTables
 
 function runit(what)
-  akt=what.akt
+  dir_name=what.dir_name
   part=what.part
   cases=what.cases
   
   res=[]
   tic,toc=mktictoc()
-  for c in cases
-    case="$(c).in"
-
+  for case in cases
     tic()
-    got=string(part("$(akt)/$(c).in"))
+    got=string(part("$(dir_name)/$(case)"))
     elapsed=toc()
 
     push!(res,(case=case,got=got,elapsed=elapsed))
@@ -22,15 +20,17 @@ end
 
 function evalit(what,res)
   cases=what.cases
-  akt=what.akt
+  dir_name=what.dir_name
   part_name=what.part_name
   status=fill("",length(cases))
-  for (i,c) in enumerate(cases)
-    if !isfile("$(akt)/$(part_name).$(c).out")
+  for (i,case) in enumerate(cases)
+    case_id=split(case,'.')[1]
+    out_name="$(dir_name)/$(part_name).$(case_id).out"
+    if !isfile(out_name)
       status[i]="N/A"
       continue
     end
-    expected=read("$(akt)/$(part_name).$(c).out",String)|>strip
+    expected=read(out_name,String)|>strip
     #printstyled("$(expected) vs $(res[c].got)\n" ,color=:red)
     if expected==res[i].got
       status[i]="OK"
@@ -69,12 +69,12 @@ function printit(what,res,status)
 
 
   cases=what.cases
-  akt=what.akt
+  dir_name=what.dir_name
   part_name=what.part_name
 
   # fake header (by hand)
   header=[
-    "" akt part_name "";
+    "" dir_name part_name "";
     "case" "got" "status" "elapsed(sec)"
   ]
   data=fill("",length(cases),4)
@@ -90,6 +90,7 @@ function printit(what,res,status)
     data;
     highlighters=(h1,h2,hOK,hWA,hNA),
     show_header=false,
-    linebreaks=true,hlines=1:length(cases)+size(header,1)
+    linebreaks=true,hlines=1:length(cases)+size(header,1),
+    limit_printing=false,
   )
 end

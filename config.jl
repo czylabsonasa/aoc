@@ -7,6 +7,6 @@ Pkg.activate(".")
 if cl_pars===nothing && isdefined(Main,:deps) && deps>[]
   Pkg.instantiate()
   Pkg.add.(deps)
-  exit(1)
+  exit(0)
 end
 

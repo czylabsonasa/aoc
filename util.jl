@@ -1,4 +1,7 @@
 msg(x)=printstyled(x,color=:light_cyan)
+err(x)=printstyled(x,color=:red)
+
+
 function mktictoc()
   past=[]
   tic()=push!(past,time())

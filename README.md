@@ -1,7 +1,11 @@
 ### aoc2022 + a simple julia project (CLI)
 
-* instantiate: `julia tester.jl` (w/o any argument)
-* run:         `julia tester.jl dayX`
-  * on linux one can use `./tester.jl dayX` after modifying the shebang line appropriately
-  * more than one days can be tested at once
+* from command-line:
+  * instantiate: `julia tester.jl` (w/o any argument)
+  * run:         `julia tester.jl dayX/partY.jl`
+  * on linux one can use `./tester.jl ...` after modifying the shebang line appropriately
+* from the REPL
+  * `include("tester.jl")`
+  * `tester() # to instantiate`
+  * `tester("dayX/partY.jl")`
 * it's in gamma stage
