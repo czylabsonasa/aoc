@@ -13,9 +13,9 @@ msg("getting up: $(round(toc(),digits=2)) sec\n")
 
 
 deps=[
-  "DataStructures", # 11,12: Queue
   "Printf","PrettyTables", # 
-  "OffsetArrays", # 14,15
+  "DataStructures", # 11,12: Queue
+  "OffsetArrays", # 14,15,18(part2)
 ]
 
 
