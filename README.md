@@ -8,8 +8,8 @@
   * `include("tester.jl")`
   * `tester() # to instantiate`
   * `tester("dayX/partY.jl")`
-* REPL w/o tester:
+* REPL w/o `tester`:
   * `partY=include("dayX/partY.jl")`
-  * `partY("dayX/[1,2].in")`
+  * `partY("dayX/Z.in")`
 
 * it's in gamma stage
