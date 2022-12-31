@@ -1,36 +1,35 @@
 #!/home/nosy/bin/julia
 
+help()=println(stderr,
+"""
+usage:
+julia create.jl Y/dayD
+where Y is the year and 
+D is a number between 1 and 25
+""")
+
 if length(ARGS)!=1
-  println("i need a number (not a hero)...")
+  help()
   exit(1)
 end
 
-d=try
-  parse(Int,ARGS[1])
+Y,D=try
+  local Y,D=split(ARGS[1],'/')
+  Y=parse(Int,Y)
+  @assert startswith(D,"day")
+  D=parse(Int,D[4:end])
+  @assert 1≤D≤25
+  Y,D
 catch
-  println("a number please...")
+  println("wrong argument")
+  help()
   exit(2)
 end
 
-try
-  @assert 1≤d≤25
-catch
-  println("a number between 1 and 25, please...")
-  exit(3)
-end
 
-target="day$(d)"
-if !isdir(target)
-  mkdir(target)
-end
-
-
-if !isfile("$(target)/$(target).jl")
-  temp=replace(read("temp.jl",String),
-    "__DAY__"=>target)
-  open("$(target)/$(target).jl","w") do f
-    write(f,temp)
-  end
+target="$(Y)/day$(D)"
+if !isdir("$(Y)") || !isdir(target)
+  mkpath(target)
 end
 
 touch(f)=if !isfile(f)
@@ -39,11 +38,16 @@ touch(f)=if !isfile(f)
   end
 end
 
-
-for f in 1:2
-  touch("$(target)/$(f).in")
-  touch("$(target)/part1.$(f).out")
-  touch("$(target)/part2.$(f).out")
+for elem in readdir("skeleton")
+  isfile("$(target)/$(elem)") && continue
+  if endswith(elem,".in")
+    touch("$(target)/$(elem)")
+  end
+  cont=replace(read("skeleton/$(elem)",String),
+    "__DAY__"=>"$(D)","__YEAR__"=>"$(Y)")
+  open("$(target)/$(elem)","w") do f
+    print(f,cont)
+  end
 end
 
 println(stderr,"OK!")

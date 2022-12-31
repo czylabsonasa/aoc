@@ -1,7 +1,7 @@
 ##############################################################
-# advent of code __YEAR__ day __DAY__
+# advent of code 2022 day 16
 
-function day__DAY__()
+function day16()
 
   readit(fname)=split(read(fname,String),keepempty=true)
 
@@ -16,4 +16,4 @@ function day__DAY__()
 
   part1,part2
 
-end # of day__DAY__
+end # of day16
