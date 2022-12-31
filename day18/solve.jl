@@ -3,7 +3,7 @@ function day18()
   readit(input)=
     [(parse.(Int,split(r,','))...,) for r in split(read(input,String),"\n",keepempty=false)]
 
-
+  # count neighbouring parts of the droplet
   function part1(input)
     input=readit(input)
 
@@ -23,10 +23,12 @@ function day18()
 
     # edges counted 2x and 1 edge "removes" two faces
     # so leave it as is
+    # 6*length(van)-(edges÷2)*2
     6*length(van)-edges 
   end # of part1
 
   # small size: floodfill from an outer point
+  # of the droplet
   function part2(input)
     input=readit(input)
     A=mapreduce(
