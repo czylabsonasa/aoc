@@ -9,7 +9,7 @@ import Pkg
 Pkg.activate(".")
 include("lib.jl")
 
-msg("getting up: $(round(toc(),digits=2)) sec\n")
+pr_msg("getting up: $(round(toc(),digits=2)) sec\n")
 
 
 deps=[
@@ -31,7 +31,7 @@ end
 
 function tester(akt)
   if !isfile(akt)
-    err("no such file.\n")
+    pr_err("no such file.\n")
     return
   end
   
@@ -46,21 +46,21 @@ function tester(akt)
   pre_part=include(akt)
   part(x)=Base.invokelatest(pre_part,x) # WAP
   printstyled("\n"*"-o-"^15*"\n",color=40)
-  msg(" include $(akt): $(round(toc(),digits=2)) sec\n")
+  pr_msg(" include $(akt): $(round(toc(),digits=2)) sec\n")
   printstyled("-o-"^15*"\n\n",color=40)
 
   what=(dir_name=dir_name,part=part,part_name=part_name,cases=cases)
   tic()
   res=runit(what)
-  msg("   run:   $(round(toc(),digits=2))\n")
+  pr_msg("   run:   $(round(toc(),digits=2))\n")
 
   tic()
   status=evalit(what,res)
-  msg("   eval:  $(round(toc(),digits=2))\n")
+  pr_msg("   eval:  $(round(toc(),digits=2))\n")
 
   tic()
   printit(what,res,status)
-  msg("   print: $(round(toc(),digits=2))\n\n") # using it once is slow...
+  pr_msg("   print: $(round(toc(),digits=2))\n\n") # using it once is slow...
 
 end # of tester
 

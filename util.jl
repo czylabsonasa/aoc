@@ -1,5 +1,5 @@
-msg(x)=printstyled(x,color=:light_cyan)
-err(x)=printstyled(x,color=:red)
+pr_msg(x)=printstyled(x,color=:light_cyan)
+pr_err(x)=printstyled(x,color=:red)
 
 
 function mktictoc()
