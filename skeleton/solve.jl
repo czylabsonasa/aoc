@@ -3,16 +3,17 @@
 
 function day__DAY__()
 
-  readit(fname)=split(read(fname,String),keepempty=true)
+  readit(input)=
+    split(read(input,String),keepempty=false)
 
   function part1(input)
     input=readit(input)
-  end
+  end # of part1
 
 
   function part2(input)
     input=readit(input)
-  end
+  end # of part2
 
   part1,part2
 
