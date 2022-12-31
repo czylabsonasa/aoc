@@ -11,6 +11,6 @@
   * `tester("Y/dayD/partX.jl")`
 * REPL w/o `tester`:
   * `partX=include("Y/dayD/partX.jl")`
-  * `partX("dayD/I.in")`
+  * `partX("Y/dayD/I.in")`
 
-* it's in pre$\omega$ stage
+* it's in delta stage
