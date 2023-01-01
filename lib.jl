@@ -1,47 +1,70 @@
 using Printf: @sprintf
 using PrettyTables
+using TOML
 
-function runit(what)
-  dir_name=what.dir_name
-  part=what.part
-  cases=what.cases
-  
+function configit(prob_name)
+  # default
+  config=TOML.parse(
+    read("config.toml",String)
+  )
+  # override the default if necessary
+  if isfile("$(prob_name)/config.toml")
+    prob_config=TOML.parse(
+      read("$(prob_name)/config.toml",String)
+    )
+    for (k,v) in prob_config
+      config[k]=v
+    end
+  end
+  config
+end
+
+function runit(info)
+  #println(stderr,info)
+
+  dir_name=info["dir_name"]
+  part_name=info["part_name"]
+  in_cases=info[part_name]["in"]
+  part=info["part"]
+
   res=[]
   tic,toc=mktictoc()
-  for case in cases
+  for case in in_cases
     tic()
     got=string(part("$(dir_name)/$(case)"))
     elapsed=toc()
 
     push!(res,(case=case,got=got,elapsed=elapsed))
   end
-  res
+  info["res"]=res
 end
 
-function evalit(what,res)
-  cases=what.cases
-  dir_name=what.dir_name
-  part_name=what.part_name
-  status=fill("",length(cases))
-  for (i,case) in enumerate(cases)
-    case_id=split(case,'.')[1]
-    out_name="$(dir_name)/$(part_name).$(case_id).out"
-    if !isfile(out_name)
+function evalit(info)
+  dir_name=info["dir_name"]
+  part_name=info["part_name"]
+  out_cases=info[part_name]["out"]
+  res=info["res"]
+
+  status=fill("",length(out_cases))
+  for (i,case) in enumerate(out_cases)
+    if !isfile("$(dir_name)/$(case)")
       status[i]="N/A"
       continue
     end
-    expected=read(out_name,String)|>strip
-    #printstyled("$(expected) vs $(res[c].got)\n" ,color=:red)
+    expected=read(
+      "$(dir_name)/$(case)",String
+    )|>strip
+    #printstyled("$(expected) vs $(res[i].got)\n" ,color=:red)
     if expected==res[i].got
       status[i]="OK"
     else
       status[i]="WA"
     end
   end
-  status
+  info["status"]=status
 end
 
-function printit(what,res,status)
+function printit(info)
   h1 = Highlighter(f=(data, i, j)->(i==1),
                           crayon = crayon"yellow bold" )
   h2 = Highlighter(f=(data, i, j)->(i==2),
@@ -68,17 +91,20 @@ function printit(what,res,status)
                           crayon = crayon"yellow" )
 
 
-  cases=what.cases
-  dir_name=what.dir_name
-  part_name=what.part_name
+  dir_name=info["dir_name"]
+  part_name=info["part_name"]
+  in_cases=info[part_name]["in"]
+  res=info["res"]
+  status=info["status"]
+
 
   # fake header (by hand)
   header=[
     "" dir_name part_name "";
     "case" "got" "status" "elapsed(sec)"
   ]
-  data=fill("",length(cases),4)
-  for i in 1:length(cases)
+  data=fill("",length(in_cases),4)
+  for i in 1:length(in_cases)
     data[i,1]=res[i].case
     data[i,2]=res[i].got
     data[i,3]=status[i]
@@ -90,7 +116,7 @@ function printit(what,res,status)
     data;
     highlighters=(h1,h2,hOK,hWA,hNA),
     show_header=false,
-    linebreaks=true,hlines=1:length(cases)+size(header,1),
+    linebreaks=true,hlines=1:length(in_cases)+size(header,1),
     limit_printing=false,
   )
 end

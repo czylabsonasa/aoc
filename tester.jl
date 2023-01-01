@@ -13,7 +13,7 @@ pr_msg("getting up: $(round(toc(),digits=2)) sec\n")
 
 
 deps=[
-  "Printf","PrettyTables", # 
+  "Printf","PrettyTables", "TOML",
   "DataStructures", # 11,12: Queue
   "OffsetArrays", # 14,15,18(part2)
 ]
@@ -29,37 +29,43 @@ function tester()
   nothing
 end
 
-function tester(akt)
-  if !isfile(akt)
+function tester(sol_fname)
+  if !isfile(sol_fname)
     pr_err("no such file.\n")
     return
   end
   
-  spakt=split(akt,'/')
-  dir_name=join(spakt[1:end-1],'/')
-  part_name=split(spakt[end],'.')[1]
-  cases=filter(x->endswith(x,".in"),readdir(dir_name))
+  fname_parts=split(sol_fname,'/')
+  prob_name=join(fname_parts[1:end-1],'/')
+  dir_name=prob_name
+  part_name=split(fname_parts[end],'.')[1]
 
-#display(cases); exit(0)
+  info=configit(dir_name)
+  info["prob_name"]=prob_name
+  info["dir_name"]=prob_name
+  info["part_name"]=part_name
+  info["sol_fname"]=sol_fname
+
 
   tic()
-  pre_part=include(akt)
+  pre_part=include(sol_fname)
   part(x)=Base.invokelatest(pre_part,x) # WAP
   printstyled("\n"*"-o-"^15*"\n",color=40)
-  pr_msg(" include $(akt): $(round(toc(),digits=2)) sec\n")
+  pr_msg(" include $(sol_fname): $(round(toc(),digits=2)) sec\n")
   printstyled("-o-"^15*"\n\n",color=40)
 
-  what=(dir_name=dir_name,part=part,part_name=part_name,cases=cases)
+  info["part"]=part
+
   tic()
-  res=runit(what)
+  runit(info)
   pr_msg("   run:   $(round(toc(),digits=2))\n")
 
   tic()
-  status=evalit(what,res)
+  evalit(info)
   pr_msg("   eval:  $(round(toc(),digits=2))\n")
 
   tic()
-  printit(what,res,status)
+  printit(info)
   pr_msg("   print: $(round(toc(),digits=2))\n\n") # using it once is slow...
 
 end # of tester

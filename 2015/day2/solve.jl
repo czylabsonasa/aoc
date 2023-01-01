@@ -3,7 +3,6 @@
 
 function day2()
 
-  # sort is included
   readit(input)=
     split(read(input,String),keepempty=false).|>
       r->parse.(Int,split(r,'x'))
