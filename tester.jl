@@ -14,8 +14,9 @@ pr_msg("getting up: $(round(toc(),digits=2)) sec\n")
 
 deps=[
   "Printf","PrettyTables", "TOML",
-  "DataStructures", # 11,12: Queue
-  "OffsetArrays", # 14,15,18(part2)
+  "DataStructures", # 22/(11,12): Queue
+  "OffsetArrays", # 22/(14,15,18(part2))
+  "MD5", # 15/(4)
 ]
 
 

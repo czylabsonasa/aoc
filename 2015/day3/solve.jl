@@ -42,7 +42,7 @@ function day3()
         ret,
         vcat(
           case[1:2:end]|>sub,
-          case[2:2:end]|>sub,
+          case[2:2:end]|>sub
         )|>unique|>length
       )
     end
