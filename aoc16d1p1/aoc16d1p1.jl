@@ -1,5 +1,5 @@
 ##############################################################
-# advent of code __YEAR__ day __DAY__ part __PART__
+# advent of code 16 day 1 part 1
 
 
 using CircularArrays
