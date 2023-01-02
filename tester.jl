@@ -16,7 +16,8 @@ deps=[
   "Printf","PrettyTables", "TOML",
   "DataStructures", # 22/(11,12): Queue
   "OffsetArrays", # 22/(14,15,18(part2))
-  "MD5", # 15/(4)
+    "MD5", # 15/(4)
+  "CircularArrays", #
 ]
 
 
