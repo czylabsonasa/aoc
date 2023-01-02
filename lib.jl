@@ -2,15 +2,15 @@ using Printf: @sprintf
 using PrettyTables
 using TOML
 
-function configit(prob_name)
+function configit(prob_home)
   # default
   config=TOML.parse(
     read("config.toml",String)
   )
   # override the default if necessary
-  if isfile("$(prob_name)/config.toml")
+  if isfile("$(prob_home)/config.toml")
     prob_config=TOML.parse(
-      read("$(prob_name)/config.toml",String)
+      read("$(prob_home)/config.toml",String)
     )
     for (k,v) in prob_config
       config[k]=v
@@ -22,16 +22,22 @@ end
 function runit(info)
   #println(stderr,info)
 
-  dir_name=info["dir_name"]
-  part_name=info["part_name"]
-  in_cases=info[part_name]["in"]
-  part=info["part"]
+
+  prob_home=info["prob_home"]
+  solve=info["solve"]
+  io_cases=info["io_cases"]
+  
 
   res=[]
   tic,toc=mktictoc()
-  for case in in_cases
+  for case in io_cases
     tic()
-    got=string(part("$(dir_name)/$(case)"))
+    open("testdir/$(case).out","w") do fout
+      solve("$(prob_home)/$(case).in",fout)
+    end
+    got=open("testdir/$(case).out","r") do fout
+      read(fout,String)
+    end
     elapsed=toc()
 
     push!(res,(case=case,got=got,elapsed=elapsed))
@@ -40,22 +46,21 @@ function runit(info)
 end
 
 function evalit(info)
-  dir_name=info["dir_name"]
-  part_name=info["part_name"]
-  out_cases=info[part_name]["out"]
+  prob_home=info["prob_home"]
+  io_cases=info["io_cases"]
   res=info["res"]
 
-  status=fill("",length(out_cases))
-  for (i,case) in enumerate(out_cases)
-    if !isfile("$(dir_name)/$(case)")
+  status=fill("",length(io_cases))
+  for (i,case) in enumerate(io_cases)
+    if !isfile("$(prob_home)/$(case).out")
       status[i]="N/A"
       continue
     end
     expected=read(
-      "$(dir_name)/$(case)",String
+      "$(prob_home)/$(case).out",String
     )|>strip
     #printstyled("$(expected) vs $(res[i].got)\n" ,color=:red)
-    if expected==res[i].got
+    if expected==res[i].got|>strip
       status[i]="OK"
     else
       status[i]="WA"
@@ -91,21 +96,20 @@ function printit(info)
                           crayon = crayon"yellow" )
 
 
-  dir_name=info["dir_name"]
-  part_name=info["part_name"]
-  in_cases=info[part_name]["in"]
+  prob_id=info["prob_id"]
+  io_cases=info["io_cases"]
   res=info["res"]
   status=info["status"]
 
 
   # fake header (by hand)
   header=[
-    "" dir_name part_name "";
+    "" prob_id "" "";
     "case" "got" "status" "elapsed(sec)"
   ]
-  data=fill("",length(in_cases),4)
-  for i in 1:length(in_cases)
-    data[i,1]=res[i].case
+  data=fill("",length(io_cases),4)
+  for i in 1:length(io_cases)
+    data[i,1]=res[i].case*".in"
     data[i,2]=res[i].got
     data[i,3]=status[i]
     data[i,4]=@sprintf "%.2e" res[i].elapsed
@@ -116,7 +120,7 @@ function printit(info)
     data;
     highlighters=(h1,h2,hOK,hWA,hNA),
     show_header=false,
-    linebreaks=true,hlines=1:length(in_cases)+size(header,1),
+    linebreaks=true,hlines=1:length(io_cases)+size(header,1),
     limit_printing=false,
   )
 end

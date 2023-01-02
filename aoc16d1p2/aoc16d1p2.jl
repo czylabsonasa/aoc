@@ -32,7 +32,6 @@ function solve(fin,fout)
   end
 
   for case in readit(fin)
-println(stderr,typeof(case))    
     println(fout,solve(case))
   end
 

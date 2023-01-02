@@ -1,5 +1,1 @@
-part1.in=["1.in","2.in"]
-part1.out=["part1.1.out","part1.2.out"]
-
-part2.in=["1.in","2.in"]
-part2.out=["part2.1.out","part2.2.out"]
+io_cases=["1","2"]

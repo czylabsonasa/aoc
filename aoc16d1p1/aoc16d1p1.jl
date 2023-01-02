@@ -3,7 +3,7 @@
 
 
 using CircularArrays
-function y16d1p1(fin,fout)
+function solve(fin,fout)
 
   readit(input)=
     split(read(input,String),'\n',keepempty=false)
@@ -11,7 +11,8 @@ function y16d1p1(fin,fout)
   dirs=CircularArray(
     [(-1,0),(0,1),(1,0),(0,-1)]
   )
-  for case in readit(fin)  
+
+  function solve(case::AbstractString)
     I,loc=1,(0,0)
     for cmd in split(case,',',keepempty=false).|>strip
       d,s=cmd[1],parse(Int,cmd[2:end])
@@ -19,9 +20,12 @@ function y16d1p1(fin,fout)
       I+=(d=='R' ? 1 : -1)
       loc=loc.+s.*dirs[I]
 #println(loc)
-      
     end
-    println(fout,abs(loc[1])+abs(loc[2]))
+    abs.(loc)|>sum
+  end # of solve(case)
+
+  for case in readit(fin)  
+    println(fout,solve(case))
   end
 
 end # of y16d1p1
