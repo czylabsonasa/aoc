@@ -1,3 +1,5 @@
+# aoc 2022 day 4  part 2
+
 function solve(fin,fout)
 
   readit(input)=split(read(input,String),"\n",keepempty=false)
