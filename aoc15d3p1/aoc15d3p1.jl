@@ -1,7 +1,7 @@
 ##############################################################
-# advent of code 2015 day 3
+# advent of code 2015 day 3 part 1
 
-function day3()
+function solve(fin,fout)
 
   # splits around newline, so 
   # treats each line as a separate case
@@ -26,29 +26,14 @@ function day3()
     ]
   end # of sub
 
+  solve(case::AbstractString)=case|>sub|>unique|>length
 
-  function part1(input)
+  println(
+    fout,
     join(
-      readit(input).|>sub.|>unique.|>length,
+      solve.(readit(fin)),
       '\n'
     )
-  end # of part1
+  )
 
-
-  function part2(input)
-    ret=[]
-    for case in readit(input)
-      push!(
-        ret,
-        vcat(
-          case[1:2:end]|>sub,
-          case[2:2:end]|>sub
-        )|>unique|>length
-      )
-    end
-    join(ret,"\n")
-  end # of part2
-
-  part1,part2
-
-end # of day3
+end # of solve(fin,fout)
