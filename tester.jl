@@ -31,25 +31,30 @@ function tester()
   nothing
 end
 
-function tester(sol_path)
+function tester(sol_path,prob_id=nothing)
   if !isfile(sol_path)
     pr_err("no such file.\n")
     return
   end
-  
+
+  info=configit()
+  problem_store=info["problem_store"]  
+
   sol_path_parts=split(sol_path,'/')
   fname=sol_path_parts[end]
   fname_parts=split(fname,'.')
-  prob_id=fname_parts[1]
-  prob_home=prob_id # subject of change 
-  extco=fname_parts[2]
+  if prob_id===nothing
+    prob_id=fname_parts[end-1]
+  end
+  prob_home="$(problem_store)/$(prob_id)" # subject of change 
+  ext=fname_parts[end]
 
-  
-  info=configit(prob_home)
+
   info["prob_id"]=prob_id
   info["prob_home"]=prob_home
   info["sol_path"]=sol_path
   info["fname"]=fname
+  configit(info)
 
 
   tic()

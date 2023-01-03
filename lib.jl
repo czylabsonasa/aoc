@@ -2,12 +2,16 @@ using Printf: @sprintf
 using PrettyTables
 using TOML
 
-function configit(prob_home)
+function configit()
   # default
-  config=TOML.parse(
+  TOML.parse(
     read("config.toml",String)
   )
+end
+
+function configit(config)
   # override the default if necessary
+  prob_home=config["prob_home"]
   if isfile("$(prob_home)/config.toml")
     prob_config=TOML.parse(
       read("$(prob_home)/config.toml",String)
@@ -16,7 +20,6 @@ function configit(prob_home)
       config[k]=v
     end
   end
-  config
 end
 
 function runit(info)
