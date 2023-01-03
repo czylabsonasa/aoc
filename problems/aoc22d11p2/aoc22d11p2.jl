@@ -1,7 +1,7 @@
 using DataStructures: Queue, enqueue!, dequeue!
 #using StaticArrays
 
-function day11()
+function solve(fin,fout)
 
   function readit(input)
     input=split(read(input,String),"\n\n",keepempty=false)
@@ -29,35 +29,12 @@ function day11()
     monkeys
   end # of readit
 
-  function part1(input; R=20) 
-    monkeys=readit(input)
-    M=length(monkeys)
-    insp=fill(0,M)
-    for r in 1:R # rounds
-      for m in 1:M
-        list=monkeys[m].list
-        fun(x)=Base.invokelatest(monkeys[m].fun,x) # W.A.P.
-        d,a,b=monkeys[m].action
-        insp[m]+=length(list)
-        while length(list)>0
-          item=fun(dequeue!(list))÷3
-          enqueue!(
-            monkeys[item%d==0 ? a : b].list,
-            item
-          )
-        end
-      end
-    end
-    insp=sort(insp)
-
-    insp[end]*insp[end-1]
-  end # of part1
-
-
   # BigInt is too slow/consumes too much memory (old^2)
   # the items are transformed to a list of remainders (remlists)
-  function part2(input; R=10000) 
-    monkeys=readit(input)
+
+    monkeys=readit(fin)
+
+    R=10000
     M=length(monkeys)
 
     ds=[monkeys[m].action[1] for m in 1:M]
@@ -104,9 +81,6 @@ function day11()
 
     insp=sort(insp)
 
-    insp[end]*insp[end-1]
-  end # of part2
+    println(fout,insp[end]*insp[end-1])
 
-  part1,part2
-
-end # of day11
+end # of solve(fin,)

@@ -1,6 +1,8 @@
+# aoc 2022 day 13 part 2
+
 # dispatch
 
-function day13()
+function solve(fin,fout)
     
   Cmp(x::Int,y::Int)=cmp(x,y)
 
@@ -42,28 +44,14 @@ function day13()
   )
     
 
-  function part1(input)
-    input=readit(input)
-    lt=0
-    for i in 1:2:length(input)-1
-      if Cmp(input[i],input[i+1])==-1
-        lt+=(i+1)÷2
-      end
-    end
-    lt
+  input=readit(fin)
+  
+  input=[input...,[[2]],[[6]]]
+  sort!(input,lt=(x,y)->Cmp(x,y)==-1)
+  i=findfirst(==([[2]]),input)
+  j=findfirst(==([[6]]),input)
 
-  end # of part1
+  println(fout,i*j)
 
-  function part2(input)
-    input=readit(input)
-    input=[input...,[[2]],[[6]]]
-    sort!(input,lt=(x,y)->Cmp(x,y)==-1)
-    i=findfirst(==([[2]]),input)
-    j=findfirst(==([[6]]),input)
-    i*j
 
-  end # of part2
-
-  part1,part2
-
-end # day13
+end # of solve(fin,)
