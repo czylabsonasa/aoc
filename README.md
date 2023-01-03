@@ -1,6 +1,6 @@
 ### aoc + a simple julia project (CLI)
 
-* currently the identifaction of a problem is done by inspecting 
+* currently getting the problem's id is done by inspecting 
   its name :-) - which is of the form `aocYdDpP.jl`, 
   where Y,D,P are the year, day and part resp.
   * it will be modified, of course
