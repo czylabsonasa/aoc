@@ -2,25 +2,24 @@ using Printf: @sprintf
 using PrettyTables
 using TOML
 
-function configit()
+function configit(where,config=nothing)
   # default
-  TOML.parse(
-    read("config.toml",String)
-  )
-end
-
-function configit(config)
-  # override the default if necessary
-  prob_home=config["prob_home"]
-  if isfile("$(prob_home)/config.toml")
-    prob_config=TOML.parse(
-      read("$(prob_home)/config.toml",String)
+  if isfile("$(where)/config.toml")
+    temp=TOML.parse(
+      read("$(where)/config.toml",String)
     )
-    for (k,v) in prob_config
-      config[k]=v
+    if config===nothing
+      return temp
+    else
+      # overwrites the old content
+      for (k,v) in temp
+        config[k]=v
+      end
     end
   end
+  
 end
+
 
 function runit(info)
   #println(stderr,info)

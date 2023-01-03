@@ -37,8 +37,9 @@ function tester(sol_path,prob_id=nothing)
     return
   end
 
-  info=configit()
+  info=configit(".")
   problem_store=info["problem_store"]  
+  configit(problem_store,info)
 
   sol_path_parts=split(sol_path,'/')
   fname=sol_path_parts[end]
@@ -49,12 +50,13 @@ function tester(sol_path,prob_id=nothing)
   prob_home="$(problem_store)/$(prob_id)" # subject of change 
   ext=fname_parts[end]
 
+  
 
   info["prob_id"]=prob_id
   info["prob_home"]=prob_home
   info["sol_path"]=sol_path
   info["fname"]=fname
-  configit(info)
+  configit(prob_home,info)
 
 
   tic()
