@@ -1,5 +1,5 @@
 let
   include("solve.jl")
-  part1,_=day2()
-  part1
+  _,part2=day5()
+  part2
 end

@@ -1,4 +1,3 @@
-using Printf: @sprintf
 using PrettyTables
 using TOML
 

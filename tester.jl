@@ -9,7 +9,7 @@ import Pkg
 Pkg.activate(".")
 include("lib.jl")
 
-pr_msg("getting up: $(round(toc(),digits=2)) sec\n")
+pr_msg("getting up: $(pr_et(toc()))\n")
 
 
 deps=[
@@ -62,28 +62,28 @@ function tester(sol_path,prob_id=nothing)
   tic()
   include(sol_path)
   # here the name solve is living
-  printstyled("\n"*"-o-"^15*"\n",color=40)
-  pr_msg(" include $(sol_path): $(round(toc(),digits=2)) sec\n")
-  printstyled("-o-"^15*"\n\n",color=40)
+  printstyled("\n"*"-o-"^20*"\n",color=40)
+  pr_msg(" include $(sol_path): $(pr_et(toc()))\n")
+  printstyled("-o-"^20*"\n\n",color=40)
 
   lsolve(x,y)=Base.invokelatest(solve,x,y)
   info["solve"]=lsolve
 
   tic()
   runit(info)
-  pr_msg("   run:   $(round(toc(),digits=2))\n")
+  pr_msg("   run:   $(pr_et(toc()))\n")
 
 
   tic()
   evalit(info)
-  pr_msg("   eval:  $(round(toc(),digits=2))\n")
+  pr_msg("   eval:  $(pr_et(toc()))\n")
 
 #exit(1)
 
 
   tic()
   printit(info)
-  pr_msg("   print: $(round(toc(),digits=2))\n\n") # using it once is slow...
+  pr_msg("   print: $(pr_et(toc()))\n\n") # using it once is slow...
 
 end # of tester
 
