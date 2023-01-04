@@ -43,13 +43,16 @@ catch
 end
 
 
-
-
 target="aoc$(Y)d$(D)p$(P)"
+ltarget="$(Y)_$(D)_$(P)"
 
 if isdir(target)
   printstyled(stderr,"we have it already.\n",color=:red)
-  exit(2)
+  if !islink("__work/$(ltarget)")
+    printstyled(stderr,"  make symlink.\n",color=:yellow)
+    symlink("../$(target)","__work/$(ltarget)",dir_target=true)
+  end
+  exit(3)
 end
 
 mkdir(target)
@@ -75,5 +78,7 @@ open("$(target)/$(target).jl","w") do f
     )
   )
 end
+
+symlink("../$(target)","__work/$(ltarget)",dir_target=true)
 
 println(stderr,"OK!")
