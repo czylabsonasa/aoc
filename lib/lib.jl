@@ -1,25 +1,6 @@
 using PrettyTables
 using TOML
 
-function configit(where,config=nothing)
-  # default
-  if isfile("$(where)/config.toml")
-    temp=TOML.parse(
-      read("$(where)/config.toml",String)
-    )
-    if config===nothing
-      return temp
-    else
-      # overwrites the old content
-      for (k,v) in temp
-        config[k]=v
-      end
-    end
-  end
-  
-end
-
-
 function runit(info)
   #println(stderr,info)
 
