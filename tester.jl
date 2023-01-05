@@ -2,6 +2,7 @@
 
 include("lib/util.jl")
 tic,toc=mktictoc()
+msg=mkmsg()
 
 
 tic()
@@ -13,25 +14,22 @@ include("lib/evalit.jl")
 include("lib/printit.jl")
 include("lib/configit.jl")
 
-pr_msg("getting up: $(pr_et(toc()))\n")
-
 
 deps=[
-  "Printf","PrettyTables", "TOML",
+  "Printf","PrettyTables", "TOML", "Crayons",
   "DataStructures", # 22/(11,12): Queue
   "OffsetArrays", # 22/(14,15,18(part2))
   "MD5", # 15/(4)
   "CircularArrays", #
 ]
 
+@info msg("getting up", toc())
 
 
 
 function tester()
-  Pkg.instantiate()
-  if isdefined(Main,:deps) && deps>[]
-    Pkg.add.(deps)
-  end
+  @warn "\ncall w/o arg, handle deps:\n\n"
+  include("deps.jl")
   nothing
 end
 
@@ -64,30 +62,29 @@ function tester(sol_path,prob_id=nothing)
 
 
   tic()
-  include(sol_path)
-  # here the name solve is living
-  printstyled("\n"*"-o-"^20*"\n",color=40)
-  pr_msg(" include $(sol_path): $(pr_et(toc()))\n")
-  printstyled("-o-"^20*"\n\n",color=40)
 
+  include(sol_path)
   lsolve(x,y)=Base.invokelatest(solve,x,y)
   info["solve"]=lsolve
 
+  @info msg("include $(sol_path)",toc())
+
+
   tic()
   runit(info)
-  pr_msg("   run:   $(pr_et(toc()))\n")
+  @info msg("run",toc())
 
 
   tic()
   evalit(info)
-  pr_msg("   eval:  $(pr_et(toc()))\n")
+  @info msg("eval",toc())
 
 #exit(1)
 
 
   tic()
   printit(info)
-  pr_msg("   print: $(pr_et(toc()))\n\n") # using it once is slow...
+  @info msg("print",toc())
 
 end # of tester
 
