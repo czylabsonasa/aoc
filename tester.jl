@@ -1,13 +1,17 @@
 #!/home/nosy/bin/julia
 
-include("util.jl")
+include("lib/util.jl")
 tic,toc=mktictoc()
 
 
 tic()
 import Pkg
 Pkg.activate(".")
-include("lib.jl")
+
+include("lib/runit.jl")
+include("lib/evalit.jl")
+include("lib/printit.jl")
+include("lib/configit.jl")
 
 pr_msg("getting up: $(pr_et(toc()))\n")
 

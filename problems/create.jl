@@ -16,6 +16,12 @@ function solve(fin,fout)
   println(fout,0)
 
 end # of solve(fin,fout)
+
+
+
+if abspath(PROGRAM_FILE)==@__FILE__
+  solve(stdin,stdout)
+end
 """
 
 
@@ -56,6 +62,9 @@ if isdir(target)
 end
 
 mkdir(target)
+mkdir("$(target)/io")
+mkdir("$(target)/sol")
+
 
 touch(f)=if !isfile(f)
   open(f,"w") do fh
@@ -63,13 +72,13 @@ touch(f)=if !isfile(f)
   end
 end
 
-touch("$(target)/1.in")
-touch("$(target)/1.out")
-touch("$(target)/2.in")
-touch("$(target)/2.out")
+touch("$(target)/io/1.in")
+touch("$(target)/io/1.out")
+touch("$(target)/io/2.in")
+touch("$(target)/io/2.out")
 
 
-open("$(target)/$(target).jl","w") do f
+open("$(target)/sol/$(target).jl","w") do f
   print(
     f,
     replace(
