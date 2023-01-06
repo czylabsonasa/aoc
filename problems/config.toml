@@ -1,2 +1,4 @@
 io_cases=["1","2"]
 
+play_dir="../__play"
+

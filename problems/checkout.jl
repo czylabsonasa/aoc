@@ -52,11 +52,16 @@ end
 target="aoc$(Y)d$(D)p$(P)"
 ltarget="$(Y)_$(D)_$(P)"
 
+import TOML
+info=TOML.parsefile("config.toml")
+play_dir=abspath(info["play_dir"])
+
+
 if isdir(target)
   printstyled(stderr,"we have it already.\n",color=:red)
-  if !islink("__work/$(ltarget)")
+  if !islink("$(play_dir)/$(ltarget)")
     printstyled(stderr,"  make symlink.\n",color=:yellow)
-    symlink("../$(target)","__work/$(ltarget)",dir_target=true)
+    symlink(abspath(target),"$(play_dir)/$(ltarget)",dir_target=true)
   end
   exit(3)
 end
@@ -88,6 +93,8 @@ open("$(target)/sol/$(target).jl","w") do f
   )
 end
 
-symlink("../$(target)","__work/$(ltarget)",dir_target=true)
+
+symlink(abspath(target),"$(play_dir)/$(ltarget)",dir_target=true)
+
 
 println(stderr,"OK!")
