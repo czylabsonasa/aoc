@@ -5,16 +5,17 @@ function runit(info)
   prob_home=info["prob_home"]
   solve=info["solve"]
   io_cases=info["io_cases"]
+  test_dir=info["test_dir"]
   
 
   res=[]
   tic,toc=mktictoc()
   for case in io_cases
     tic()
-    open("testdir/$(case).out","w") do fout
+    open("$(test_dir)/$(case).out","w") do fout
       solve("$(prob_home)/io/$(case).in",fout)
     end
-    got=open("testdir/$(case).out","r") do fout
+    got=open("$(test_dir)/$(case).out","r") do fout
       read(fout,String)
     end
     elapsed=toc()
