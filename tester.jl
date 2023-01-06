@@ -15,17 +15,7 @@ include("lib/printit.jl")
 include("lib/configit.jl")
 
 
-deps=[
-  "Printf","PrettyTables", "TOML", "Crayons",
-  "DataStructures", # 22/(11,12): Queue
-  "OffsetArrays", # 22/(14,15,18(part2))
-  "MD5", # 15/(4)
-  "CircularArrays", #
-]
-
 @info msg("getting up", toc())
-
-
 
 function tester()
   @warn "\ncall w/o arg, handle deps:\n\n"
