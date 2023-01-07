@@ -55,6 +55,7 @@ ltarget="$(Y)_$(D)_$(P)"
 import TOML
 info=TOML.parsefile("config.toml")
 play_dir=abspath(info["play_dir"])
+!isdir(play_dir) && mkdir(play_dir)
 
 
 if isdir(target)
