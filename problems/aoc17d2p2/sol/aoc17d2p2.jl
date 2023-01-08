@@ -3,7 +3,7 @@
 # advent of code 17 day 2 part 2
 
 using LinearAlgebra
-
+-
 function solve(fin,fout)
 
   readit(input)=
