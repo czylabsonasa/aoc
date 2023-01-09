@@ -1,3 +1,29 @@
-problem_store="problems"
+[general]
+problem_dir="problems"
+test_dir="danger"
 
-testdir="danger"
+[lang]
+julia=["jl"]
+python=["py","py3"]
+c=["c"]
+"c++"=["cc","cpp"]
+binary=["bin","exe"]
+octave=["m"]
+
+
+[submission]
+sol_path=""               # 
+lang=""                   # it 
+user_id=0                 # Int
+problem_id=""             # must be a unique string
+sol_mode="func"           # prog is the classic stdin/stdout way
+sender="other"            # cli, repl, other
+
+
+[process]
+error=0
+infoit="n/a"
+validateit="n/a"
+compileit="n/a"
+runit="n/a"
+reportit="n/a"

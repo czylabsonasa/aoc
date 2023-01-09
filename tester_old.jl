@@ -1,40 +1,22 @@
 #!/home/nosy/bin/julia
-#
-#
-#
 
-include("lib/Testit.jl")
-using .Testit
-
-
+include("lib/util.jl")
 tic,toc=mktictoc()
 msg=mkmsg()
 
-function tester(args::Vector{String})
-  info=infoit_cli(args)
-  validateit(info)
-  @info """
-  $(string(info["submission"]))
-  $(string(info["process"]))
-  """
-end
 
-function tester(;args...)
-  info=infoit_repl(;args...)
-  validateit(info)
-  @info """
-  $(string(info["submission"]))
-  $(string(info["process"]))
-  """
-end
+tic()
+import Pkg
+Pkg.activate(".")
+
+include("lib/runit.jl")
+include("lib/evalit.jl")
+include("lib/printit.jl")
+include("lib/configit.jl")
 
 
-if abspath(PROGRAM_FILE)==@__FILE__
-  tester(ARGS)
-end
+@info msg("getting up", toc())
 
-
-#=
 function tester()
   @warn "\ncall w/o arg, handle deps:\n\n"
   include("deps.jl")
@@ -104,4 +86,3 @@ if abspath(PROGRAM_FILE)==@__FILE__
     tester(ARGS[1])
   end
 end
-=#

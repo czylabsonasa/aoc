@@ -17,10 +17,6 @@ function mkmsg()
   end
   msg
 end
-pr_et(x)=@sprintf "%.3f sec" x
-pr_msg(x)=printstyled(x,color=:light_cyan)
-pr_err(x)=printstyled(x,color=:red)
-
 
 function mktictoc()
   past=[]
