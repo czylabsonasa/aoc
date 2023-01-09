@@ -16,6 +16,7 @@ function infoit_cli(args)
   info=infoit()
   sub=info["submission"]
   sub["sender"]="cli"
+  sub["test_id"]=hash(time_ns())|>string
 
   proc=info["process"]
   proc["infoit"]="ok"
@@ -41,6 +42,8 @@ function infoit_repl(;args...)
   info=infoit()
   sub=info["submission"]
   sub["sender"]="repl"
+  sub["test_id"]=hash(time_ns())|>string
+  
 
   proc=info["process"]
   proc["infoit"]="ok"

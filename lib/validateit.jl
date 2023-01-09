@@ -32,17 +32,17 @@ function validateit(info)
   end
     
   
-  problem_dir=gen["problem_dir"]
+  problem_db=info["general"]["problem_db"]
   problem_id=sub["problem_id"]
 
   if problem_id>"" 
-    if !isdir("$(problem_dir)/$(problem_id)")
+    if !isdir("$(problem_db)/$(problem_id)")
       proc["validateit"]="no such problem ($(problem_id))"
       proc["error"]+=1
       return
     end
   else
-    if !isdir("$(problem_dir)/$(sol_file_body)")
+    if !isdir("$(problem_db)/$(sol_file_body)")
       proc["validateit"]="cannot guess problem_id"
       proc["error"]+=1
       return
@@ -74,7 +74,9 @@ function validateit(info)
 
 
   sub["problem_id"]=problem_id
+  sub["problem_dir"]="$(problem_db)/$(problem_id)"
   sub["lang"]=lang
+  sub["ext"]=info["lang"][lang][1]
 
   
 end

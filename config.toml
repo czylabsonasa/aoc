@@ -1,10 +1,10 @@
 [general]
-problem_dir="problems"
+problem_db="problems"
 test_dir="danger"
 
 [lang]
 julia=["jl"]
-python=["py","py3"]
+python=["py"]
 c=["c"]
 "c++"=["cc","cpp"]
 binary=["bin","exe"]
@@ -18,12 +18,15 @@ user_id=0                 # Int
 problem_id=""             # must be a unique string
 sol_mode="func"           # prog is the classic stdin/stdout way
 sender="other"            # cli, repl, other
+test_id=""
+problem_dir=""            # the path to the act ptoblem (for convenience)
 
 
 [process]
 error=0
 infoit="n/a"
 validateit="n/a"
+prepareit="n/a"
 compileit="n/a"
 runit="n/a"
 reportit="n/a"

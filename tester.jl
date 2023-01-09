@@ -10,15 +10,16 @@ using .Testit
 tic,toc=mktictoc()
 msg=mkmsg()
 
+# cli call
 function tester(args::Vector{String})
   info=infoit_cli(args)
   validateit(info)
-  @info """
-  $(string(info["submission"]))
-  $(string(info["process"]))
-  """
+  prepareit(info) # prepare testdir+sol_file+io
+  
+  @info join(ppdict(["\ninfo"=>info],"  "),'\n')
 end
 
+# repl call
 function tester(;args...)
   info=infoit_repl(;args...)
   validateit(info)

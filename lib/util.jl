@@ -24,3 +24,17 @@ function mktictoc()
   toc()=past>[] ? time()-pop!(past) : 0.0
   tic,toc
 end
+
+# debug
+# walk through a dict & prepare for indented print out
+function ppdict(dd,ind)
+  ret=[]
+  for (k,v) in dd
+    if v isa AbstractDict
+      append!(ret,[ind*"$(k)=>(...)"],ppdict(v,ind*"  "))
+    else
+      push!(ret,ind*"$(k)=>$(v)")
+    end      
+  end
+  ret
+end
