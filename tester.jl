@@ -15,7 +15,9 @@ function tester(args::Vector{String})
   info=infoit_cli(args)
   validateit(info)
   prepareit(info) # prepare testdir+sol_file+io
-  
+  compileit(info)
+  runit(info)
+  finalit(info)
   @info join(ppdict(["\ninfo"=>info],"  "),'\n')
 end
 
@@ -23,10 +25,10 @@ end
 function tester(;args...)
   info=infoit_repl(;args...)
   validateit(info)
-  @info """
-  $(string(info["submission"]))
-  $(string(info["process"]))
-  """
+  prepareit(info) # prepare testdir+sol_file+io
+  compileit(info)
+  finalit(info)
+  @info join(ppdict(["\ninfo"=>info],"  "),'\n')
 end
 
 

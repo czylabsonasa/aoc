@@ -16,11 +16,12 @@ sol_path=""               #
 lang=""                   # it 
 user_id=0                 # Int
 problem_id=""             # must be a unique string
-sol_mode="func"           # prog is the classic stdin/stdout way
+sol_mode="app"            # prog is the classic stdin/stdout way, app is the solve(fin,fout) one
 sender="other"            # cli, repl, other
 test_id=""
+test_dir=""
 problem_dir=""            # the path to the act ptoblem (for convenience)
-
+store=0
 
 [process]
 error=0
@@ -30,3 +31,4 @@ prepareit="n/a"
 compileit="n/a"
 runit="n/a"
 reportit="n/a"
+finalit="n/a"

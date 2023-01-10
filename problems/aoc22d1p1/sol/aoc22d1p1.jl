@@ -15,7 +15,8 @@ function solve(fin,fout)
     end
     akt+=v
   end
-  
+
+ 
   println(fout,maxi)
  
 end # of solve(fin,)

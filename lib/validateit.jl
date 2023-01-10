@@ -78,5 +78,4 @@ function validateit(info)
   sub["lang"]=lang
   sub["ext"]=info["lang"][lang][1]
 
-  
 end

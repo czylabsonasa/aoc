@@ -1,26 +1,28 @@
 function runit(info)
-  #println(stderr,info)
-
-
-  prob_home=info["prob_home"]
-  solve=info["solve"]
-  io_cases=info["io_cases"]
-  testdir=info["testdir"]
-  
-
-  res=[]
-  tic,toc=mktictoc()
-  for case in io_cases
-    tic()
-    open("$(testdir)/$(case).out","w") do fout
-      solve("$(prob_home)/io/$(case).in",fout)
-    end
-    got=open("$(testdir)/$(case).out","r") do fout
-      read(fout,String)
-    end
-    elapsed=toc()
-
-    push!(res,(case=case,got=got,elapsed=elapsed))
+  proc=info["process"]
+  if proc["error"]>0
+    return
   end
-  info["res"]=res
+  sub=info["submission"]
+  lang=sub["lang"]
+  mode=sub["sol_mode"]
+  execute=getfield(getfield(cr_command,Symbol(lang)),Symbol(mode))
+  if execute===nothing
+    proc["runit"]="$(mode) is not available"
+    proc["error"]+=1
+    return
+  end
+
+  if mode=="app"
+    cd(sub["test_dir"])
+    try
+      run(execute)
+    catch
+      proc["runit"]="rte"
+      proc["error"]+=1
+      return
+    end
+  end
+  proc["runit"]="ok"
+  
 end

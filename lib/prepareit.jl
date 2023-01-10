@@ -17,11 +17,15 @@ function prepareit(info)
     return
   end
 
+  sub["test_dir"]=test_dir
   mkdir(test_dir)
 
   ext=sub["ext"]
   cp(sub["sol_path"],"$(test_dir)/solve.$(ext)")
 
   cp("""$(sub["problem_dir"])/io""","$(test_dir)/io")
-  
+  if sub["sol_mode"]=="app"
+    cp("lib/app.$(ext)","$(test_dir)/app.$(ext)")
+  end
+ 
 end
