@@ -13,8 +13,10 @@ function runit(info)
     return
   end
 
+  wd=abspath(pwd())
+  cd(sub["test_dir"])
+  
   if mode=="app"
-    cd(sub["test_dir"])
     try
       run(execute)
     catch
@@ -23,6 +25,8 @@ function runit(info)
       return
     end
   end
+
+  cd(wd)
   proc["runit"]="ok"
   
 end

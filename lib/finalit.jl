@@ -1,7 +1,8 @@
 function finalit(info)
+  @warn pwd()|>string
   sub=info["submission"]
   if sub["store"]==0 && sub["test_dir"]>""
-    rm(sub["test_dir"],recursive=true)
+    rm(sub["test_dir"],recursive=true) # 
   end
   proc=info["process"]
   proc["finalit"]="ok"
